@@ -56,56 +56,5 @@ public class Application {
                 System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+result.getPrice()+"");
             }
         }
-//        switch (option){
-//            case 1:
-//                System.out.println("Nhập vào hãng:");
-//                String maker = scanner.nextLine();
-//                List<LaptopEntity> laptopEntities = laptopService.findAllByMaker(maker);
-//                if(laptopEntities == null || laptopEntities.isEmpty()){
-//                    System.out.println("Không tìm thấy");
-//                }else{
-//                    for(LaptopEntity result: laptopEntities){
-//                        System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+result.getPrice()+"");
-//                    }
-//                }
-//                break;
-//            case 2:
-//                System.out.println("Nhập vào khoảng giá(VND): ");
-//                System.out.println("Giá min: ");
-//                Float priceFrom = scanner.nextFloat();
-//                System.out.println("Giá max: ");
-//                Float priceTo = scanner.nextFloat();
-//                if(priceFrom == null){
-//                    priceFrom = 0.0f;
-//                }else if(priceTo == null){
-//                    priceTo = laptopService.findMaxPrice();
-//                }else if(priceFrom == null && priceTo == null){
-//                    priceFrom = 0.0f;
-//                    priceTo = laptopService.findMaxPrice();
-//                }
-//                List<LaptopEntity> listFindByPrice = laptopService.findAllByPrice(priceFrom,priceTo);
-//                if(listFindByPrice == null || listFindByPrice.isEmpty()){
-//                    System.out.println("Không tìm thấy");
-//                }else{
-//                    for(LaptopEntity result: listFindByPrice){
-//                        System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+result.getPrice()+"");
-//                    }
-//                }
-//                break;
-//            case 3:
-//                System.out.println("Nhập vào hãng:");
-//                String maker1 = scanner.nextLine();
-//                System.out.println("Nhập vào loại ổ cứng SSD(VD: 256GB):");
-//                String ssd = scanner.nextLine();
-//                List<LaptopEntity> listFindByMakerAndSSD = laptopService.findAllByMakerAndSSD(maker1,ssd);
-//                if(listFindByMakerAndSSD == null || listFindByMakerAndSSD.isEmpty()){
-//                    System.out.println("Không tìm thấy");
-//                }else{
-//                    for(LaptopEntity result: listFindByMakerAndSSD){
-//                        System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+result.getPrice()+"");
-//                    }
-//                }
-//                break;
-//        }
     }
 }
