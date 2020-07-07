@@ -28,6 +28,39 @@ public class LaptopService {
         }
         return null;
     }
+    public List<LaptopEntity> topSold(){
+        String sql = "SELECT * FROM laptop ORDER BY sold desc LIMIT 5";
+        try{
+            List<LaptopEntity> response = new ArrayList<>();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                LaptopEntity laptopEntity = new LaptopEntity(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getFloat(13),
+                        rs.getInt(14),
+                        rs.getTimestamp(15),
+                        rs.getTimestamp(16)
+                );
+                response.add(laptopEntity);
+            }
+            return response;
+        }catch (Exception e) {
+            System.out.println("Error when find laptop!" + e);
+        }
+        return null;
+    }
     public List<LaptopEntity> findLaptop(List<Integer> lstOptions){
         Scanner scanner = new Scanner(System.in);
         String sql ="SELECT * FROM laptop WHERE ";

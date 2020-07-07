@@ -49,11 +49,21 @@ public class Application {
         }
         Collections.sort(lstOption);
         List<LaptopEntity> laptopEntities = laptopService.findLaptop(lstOption);
+        System.out.println("Kết quả tìm kiếm: ");
         if(laptopEntities==null||laptopEntities.isEmpty()){
             System.out.println("Không tìm thấy");
         }else{
             for(LaptopEntity result: laptopEntities){
                 System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+result.getPrice()+"");
+            }
+        }
+        System.out.println("Top 5 máy tính bán chạy nhất:");
+        List<LaptopEntity> topSold = laptopService.topSold();
+        if(topSold==null||topSold.isEmpty()){
+            System.out.println("Chưa có máy nào được bán!");
+        }else{
+            for(LaptopEntity result: topSold){
+                System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+result.getPrice()+" | Đã bán: "+result.getSold()+" máy");
             }
         }
     }
