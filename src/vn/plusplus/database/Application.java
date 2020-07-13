@@ -1,10 +1,16 @@
 package vn.plusplus.database;
 
+import vn.plusplus.database.models.CounterEntity;
+import vn.plusplus.database.models.StatisticEntity;
+import vn.plusplus.database.services.CounterService;
 import vn.plusplus.database.services.LaptopService;
 import vn.plusplus.database.models.LaptopEntity;
+import vn.plusplus.database.services.StatisticService;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Application {
@@ -29,6 +35,7 @@ public class Application {
             System.out.println("Connection Failed! Check output console");
             return;
         }
+        DecimalFormat df = new DecimalFormat();
         System.out.println("Tìm kiếm:");
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. Tìm kiếm latop theo khoảng giá");
@@ -41,6 +48,8 @@ public class Application {
         System.out.println("8. Sắp xếp tăng giảm");
         System.out.println("Nhập lựa chọn(mỗi lựa chọn cách nhau dấu cách): ");
         LaptopService laptopService = new LaptopService(connection);
+        CounterService counterService = new CounterService(connection);
+        StatisticService statisticService = new StatisticService(connection);
         String strOption = scanner.nextLine();
         String[] arrOption = strOption.split(" ");
         List<Integer> lstOption = new ArrayList<>();
@@ -57,13 +66,34 @@ public class Application {
                 System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+result.getPrice()+"");
             }
         }
+        System.out.println();
         System.out.println("Top 5 máy tính bán chạy nhất:");
         List<LaptopEntity> topSold = laptopService.topSold();
         if(topSold==null||topSold.isEmpty()){
             System.out.println("Chưa có máy nào được bán!");
         }else{
             for(LaptopEntity result: topSold){
-                System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+result.getPrice()+" | Đã bán: "+result.getSold()+" máy");
+                System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+df.format(result.getPrice())+" | Đã bán: "+result.getSold()+" máy");
+            }
+        }
+        System.out.println();
+        System.out.println("Thống kê hãng và số lượng");
+        List<CounterEntity> statisticMakerAndQuantity = counterService.getCounterByMaker();
+        if(statisticMakerAndQuantity==null||statisticMakerAndQuantity.isEmpty()){
+            System.out.println("Không có dữ liệu");
+        }else{
+            for (CounterEntity result: statisticMakerAndQuantity){
+                System.out.println("Tên hãng: "+result.getMaker()+" | Số lượng: "+result.getQuantity());
+            }
+        }
+        System.out.println();
+        System.out.println("Thống kê hãng và số tiền bán được");
+        List<StatisticEntity> statisticMakerAndTotalSoldMoney = statisticService.getStatisticByMaker();
+        if(statisticMakerAndTotalSoldMoney==null||statisticMakerAndTotalSoldMoney.isEmpty()){
+            System.out.println("Không có dữ liệu");
+        }else{
+            for (StatisticEntity result: statisticMakerAndTotalSoldMoney){
+                System.out.println("Tên hãng: "+result.getMaker()+" | Số lượng đã bán: "+result.getSold()+" | Số tiền bán được: "+df.format(result.getTotalMoney())+" vnđ");
             }
         }
     }
