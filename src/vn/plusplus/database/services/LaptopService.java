@@ -28,10 +28,9 @@ public class LaptopService {
         }
         return null;
     }
-    public List<LaptopEntity> topSold(){
-        String sql = "SELECT * FROM laptop ORDER BY sold desc LIMIT 5";
+    private List<LaptopEntity> queryDatabase(String sql){
+        List<LaptopEntity> laptopEntities = new ArrayList<>();
         try{
-            List<LaptopEntity> response = new ArrayList<>();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
@@ -53,13 +52,17 @@ public class LaptopService {
                         rs.getTimestamp(15),
                         rs.getTimestamp(16)
                 );
-                response.add(laptopEntity);
+                laptopEntities.add(laptopEntity);
             }
-            return response;
         }catch (Exception e) {
-            System.out.println("Error when find laptop!" + e);
+            System.out.println("Error when query!" + e);
         }
-        return null;
+        return laptopEntities;
+    }
+    public List<LaptopEntity> topSold(){
+        String sql = "SELECT * FROM laptop ORDER BY sold desc LIMIT 5";
+        List<LaptopEntity> laptopEntities = queryDatabase(sql);
+        return laptopEntities;
     }
     public List<LaptopEntity> findLaptop(List<Integer> lstOptions){
         Scanner scanner = new Scanner(System.in);
@@ -115,131 +118,22 @@ public class LaptopService {
                 sql+=" AND ";
             }
         }
-        try{
-            List<LaptopEntity> response = new ArrayList<>();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()){
-                LaptopEntity laptopEntity = new LaptopEntity(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getFloat(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getFloat(13),
-                        rs.getInt(14),
-                        rs.getTimestamp(15),
-                        rs.getTimestamp(16)
-                );
-                response.add(laptopEntity);
-            }
-            return response;
-        }catch (Exception e) {
-            System.out.println("Error when find laptop!" + e);
-        }
-        return null;
+        List<LaptopEntity> laptopEntities = queryDatabase(sql);
+        return laptopEntities;
     }
     public List<LaptopEntity> findAllByMaker(String maker) {
-        try {
-            List<LaptopEntity> responses = new ArrayList<>();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM laptop WHERE maker='" + maker + "'");
-            while (rs.next()) {
-                LaptopEntity laptopEntity = new LaptopEntity(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getFloat(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getFloat(13),
-                        rs.getInt(14),
-                        rs.getTimestamp(15),
-                        rs.getTimestamp(16)
-                );
-                responses.add(laptopEntity);
-            }
-            return responses;
-        } catch (Exception e) {
-            System.out.println("Error when find laptop by maker. " + e);
-        }
-        return null;
+        String sql = "SELECT * FROM laptop WHERE maker='" + maker + "'";
+        List<LaptopEntity> laptopEntities = queryDatabase(sql);
+        return laptopEntities;
     }
     public List<LaptopEntity> findAllByPrice(Float start,Float end){
-        try{
-            List<LaptopEntity> responses = new ArrayList<>();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM laptop WHERE price BETWEEN '"+start+ "' AND '" +end+"'");
-            while (rs.next()) {
-                LaptopEntity laptopEntity = new LaptopEntity(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getFloat(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getFloat(13),
-                        rs.getInt(14),
-                        rs.getTimestamp(15),
-                        rs.getTimestamp(16)
-                );
-                responses.add(laptopEntity);
-            }
-            return responses;
-        }catch (Exception e){
-            System.out.println("Error when find laptop by price"+e);
-        }
-        return null;
+        String sql = "SELECT * FROM laptop WHERE price BETWEEN '"+start+ "' AND '" +end+"'";
+        List<LaptopEntity> laptopEntities = queryDatabase(sql);
+        return laptopEntities;
     }
     public List<LaptopEntity> findAllByMakerAndSSD(String maker,String ssd){
-        try{
-            List<LaptopEntity> responses = new ArrayList<>();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM laptop WHERE maker = '"+maker+ "' AND ssd = '" +ssd+"'");
-            while (rs.next()) {
-                LaptopEntity laptopEntity = new LaptopEntity(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getFloat(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getFloat(13),
-                        rs.getInt(14),
-                        rs.getTimestamp(15),
-                        rs.getTimestamp(16)
-                );
-                responses.add(laptopEntity);
-            }
-            return responses;
-        }catch (Exception e){
-            System.out.println("Error when find laptop by maker and SSD"+e);
-        }
-        return null;
+        String sql = "SELECT * FROM laptop WHERE maker = '"+maker+ "' AND ssd = '" +ssd+"'";
+        List<LaptopEntity> laptopEntities = queryDatabase(sql);
+        return laptopEntities;
     }
 }
