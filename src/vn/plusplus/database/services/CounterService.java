@@ -35,7 +35,7 @@ public class CounterService{
         return counterEntities;
     }
     public List<CounterEntity> getCounterByMaker(){
-        String sql = "SELECT maker,count(maker) as quantity FROM laptop GROUP BY maker";
+        String sql = "SELECT maker,count(maker) as quantity FROM laptop GROUP BY maker ORDER BY quantity DESC";
         List<CounterEntity> counterEntities = queryDatabase(sql);
         return counterEntities;
     }
