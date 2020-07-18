@@ -35,7 +35,6 @@ public class LaptopService {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 LaptopEntity laptopEntity = new LaptopEntity(
-                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -135,5 +134,17 @@ public class LaptopService {
         String sql = "SELECT * FROM laptop WHERE maker = '"+maker+ "' AND ssd = '" +ssd+"'";
         List<LaptopEntity> laptopEntities = queryDatabase(sql);
         return laptopEntities;
+    }
+    public List<LaptopEntity> addLaptop(LaptopEntity laptopEntity, String name){
+        String sql_insert = "INSERT IGNORE INTO laptop(`name`, `url`, `maker`, `type`, `ram`, `cpu`, `ssd`, `hdd`, `price`, `card`, `screen_resolution`, `screen_size`, `sold`) VALUES('"+laptopEntity.getName()+"','"+laptopEntity.getUrl()+"','"+laptopEntity.getMaker()+"','"+laptopEntity.getType()+"','"+laptopEntity.getRam()+"','"+laptopEntity.getCpu()+"','"+laptopEntity.getSsd()+"','"+laptopEntity.getHdd()+"','"+laptopEntity.getPrice()+"','"+laptopEntity.getCard()+"','"+laptopEntity.getScreenResolution()+"','"+laptopEntity.getScreenSize()+"','"+laptopEntity.getSold()+"')";
+        try{
+            Statement stmt = con.createStatement();
+            stmt.execute(sql_insert);
+        }catch (Exception e){
+            System.out.println("Error when insert laptop! "+e);
+        }
+        String sql_find_name = "SELECT * FROM laptop WHERE name = '"+name+"' ";
+        List<LaptopEntity> laptopEntity1 = queryDatabase(sql_find_name);
+        return laptopEntity1;
     }
 }
