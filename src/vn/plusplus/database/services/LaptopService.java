@@ -35,6 +35,7 @@ public class LaptopService {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 LaptopEntity laptopEntity = new LaptopEntity(
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -146,5 +147,22 @@ public class LaptopService {
         String sql_find_name = "SELECT * FROM laptop WHERE name = '"+name+"' ";
         List<LaptopEntity> laptopEntity1 = queryDatabase(sql_find_name);
         return laptopEntity1;
+    }
+    public List<LaptopEntity> updateSold(int id,int quantity){
+        String sql = "UPDATE laptop SET sold = sold+"+quantity+" WHERE id = '"+id+"'";
+        try{
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate(sql);
+        }catch (Exception e){
+            System.out.println("Không tìm thất ID! "+e);
+        }
+        String sql_select = "SELECT * FROM laptop WHERE id = '"+id+"'";
+        List<LaptopEntity> update_sold = queryDatabase(sql_select);
+        return update_sold;
+    }
+    public List<LaptopEntity> findByID(int id){
+        String sql = "SELECT * FROM laptop WHERE id = '"+id+"'";
+        List<LaptopEntity> find_by_id = queryDatabase(sql);
+        return find_by_id;
     }
 }
