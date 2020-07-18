@@ -63,7 +63,7 @@ public class Application {
             System.out.println("Không tìm thấy");
         }else{
             for(LaptopEntity result: laptopEntities){
-                System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+result.getPrice()+"");
+                System.out.println("ID: "+result.getId()+" | Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+df.format(result.getPrice())+"");
             }
         }
         System.out.println();
@@ -73,7 +73,7 @@ public class Application {
             System.out.println("Chưa có máy nào được bán!");
         }else{
             for(LaptopEntity result: topSold){
-                System.out.println("Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+df.format(result.getPrice())+" | Đã bán: "+result.getSold()+" máy");
+                System.out.println("ID: "+result.getId()+" | Tên sản phẩm: "+result.getName()+" | Giá sản phẩm: "+df.format(result.getPrice())+" | Đã bán: "+result.getSold()+" máy");
             }
         }
         System.out.println();
@@ -106,6 +106,30 @@ public class Application {
         }else {
             for(LaptopEntity rs:laptop_added){
                 System.out.println("Tên hãng: "+rs.getName()+" | Giá: "+df.format(rs.getPrice())+"vnđ | Số lượng đã bán: "+rs.getSold());
+            }
+        }
+        System.out.println();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhập ID của sản phẩm: ");
+        int id = sc.nextInt();
+        System.out.println("Nhập vào số lượng đã bán tăng thêm: ");
+        int quantity = sc.nextInt();
+        System.out.println("Dữ liệu trước khi thay đổi: ");
+        List<LaptopEntity> find_by_id = laptopService.findByID(id);
+        if(find_by_id==null||find_by_id.isEmpty()){
+            System.out.println("Không có dữ liệu");
+        }else {
+            for(LaptopEntity rs:find_by_id){
+                System.out.println("ID: "+rs.getId()+" | Tên hãng: "+rs.getName()+" | Số lượng đã bán(mới): "+rs.getSold());
+            }
+        }
+        List<LaptopEntity> update_sold = laptopService.updateSold(id,quantity);
+        System.out.println("Dữ liệu sau khi thay đổi: ");
+        if(update_sold==null||update_sold.isEmpty()){
+            System.out.println("Không có dữ liệu");
+        }else {
+            for(LaptopEntity rs:update_sold){
+                System.out.println("ID: "+rs.getId()+" | Tên hãng: "+rs.getName()+" | Số lượng đã bán(mới): "+rs.getSold());
             }
         }
     }
