@@ -96,5 +96,17 @@ public class Application {
                 System.out.println("Tên hãng: "+result.getMaker()+" | Số lượng đã bán: "+result.getSold()+" | Số tiền bán được: "+df.format(result.getTotalMoney())+" vnđ");
             }
         }
+        System.out.println();
+        System.out.println("Nhập vào dữ liệu máy tính: ");
+        LaptopEntity insert_laptop = new LaptopEntity("HP","https://www.hp.com","HP","EliteBook","4GB","Intel","128GB","512GB",10000000f,"AMD","1366x768",17f,12,null,null);
+        List<LaptopEntity> laptop_added = laptopService.addLaptop(insert_laptop,insert_laptop.getName());
+        System.out.println("Thông tin máy mới được thêm vào");
+        if(laptop_added==null||laptop_added.isEmpty()){
+            System.out.println("Không có dữ liệu");
+        }else {
+            for(LaptopEntity rs:laptop_added){
+                System.out.println("Tên hãng: "+rs.getName()+" | Giá: "+df.format(rs.getPrice())+"vnđ | Số lượng đã bán: "+rs.getSold());
+            }
+        }
     }
 }
