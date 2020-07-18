@@ -21,8 +21,7 @@ public class LaptopEntity {
     private Timestamp lastedUpdateTimeStamp;
     public LaptopEntity(){ }
 
-    public LaptopEntity(int id, String name, String url, String maker, String type, String ram, String cpu, String ssd, String hdd, Float price, String card, String screenResolution, Float screenSize, int sold, Timestamp createdTimeStamp, Timestamp lastedUpdateTimeStamp) {
-        this.id = id;
+    public LaptopEntity(String name, String url, String maker, String type, String ram, String cpu, String ssd, String hdd, Float price, String card, String screenResolution, Float screenSize, int sold, Timestamp createdTimeStamp, Timestamp lastedUpdateTimeStamp) {
         this.name = name;
         this.url = url;
         this.maker = maker;
